@@ -1,36 +1,65 @@
-# Final Project!
+# Final Project - Feel the 3D Dungeon!
 
 This is it! The culmination of your procedural graphics experience this semester. For your final project, we'd like to give you the time and space to explore a topic of your choosing. You may choose any topic you please, so long as you vet the topic and scope with an instructor or TA. We've provided some suggestions below. The scope of your project should be roughly 1.5 homework assignments). To help structure your time, we're breaking down the project into 4 milestones:
 
 ## Project planning: Design Doc (due 11/6)
-Before submitting your first milestone, _you must get your project idea and scope approved by Rachel, Adam or a TA._
+TODO: get your project idea and scope approved by Rachel, Adam or a TA.
 
-### Design Doc
-Start off by forking this repository. In your README, write a design doc to outline your project goals and implementation plan. It must include the following sections:
+# Design Doc
 
-#### Introduction
-- What motivates your project?
+## Introduction
+#### What motivates your project?
 
-#### Goal
-- What do you intend to achieve with this project?
+With the CGGT SIGLAB has been moved to a "Dungeon", and as a gameplay engineer, after taking the procedure generation course, I was thinking: what if I build a procedure dungeon game level in Unity3D? Therefore, I want to create an infinite-level puzzle game. The gameplay should be very easy to understand and get started. Once the player starts the game, it will automatically generate a character in a random starting place, player needs to find all the stars that randomly dropped in the dungeon. If the player can collect all the stars on the current level, the system will move the player to the next level, the entire dungeon map will be shuffled and the player needs to collect all the stars again to get into the next level. As the level increases, the player needs to collect more and more stars (maximum 5 stars).
 
-#### Inspiration/reference:
+|Dungeon Map|
+|:-:|
+|<img src="img/idea01.png" width=500>|
+
+## Goal
+#### What do you intend to achieve with this project?
+
+I want to create a high-freedom 3D puzzle game with the implementation of Wave Function Collapse [Algorithm reference](https://github.com/mxgmn/WaveFunctionCollapse)
+
+## Inspiration:
 - You must have some form of reference material for your final project. Your reference may be a research paper, a blog post, some artwork, a video, another class at Penn, etc.  
 - Include in your design doc links to and images of your reference material.
 
-#### Specification:
-- Outline the main features of your project.
+In the beginning, I was inspired by this project: [3D Wavefunction Collapse Dungeon Generator](https://whaoran0718.github.io/3dDungeonGeneration/)
 
-#### Techniques:
-- What are the main technical/algorithmic tools you’ll be using? Give an overview, citing specific papers/articles.
+|Dungeon Generator|
+|:-:|
+|<img src="img/dungeon.gif" width=500>|
 
-#### Design:
-- How will your program fit together? Make a simple free-body diagram illustrating the pieces.
+The most important part of the implementation is the Wave Function Collapse algorithm, I found this: [Algorithm reference](https://github.com/mxgmn/WaveFunctionCollapse) as a reference.
 
-#### Timeline:
-- Create a week-by-week set of milestones for each person in your group. Make sure you explicitly outline what each group member's duties will be.
+## Specification:
+#### Outline the main features of your project.
+##### 1. 3D Character Movement
+##### 2. Procedure Dungeon Generator
+##### 3. Random Stars Generator
 
-Submit your Design doc as usual via pull request against this repository.
+
+## Techniques:
+#### What are the main technical/algorithmic tools you’ll be using? Give an overview, citing specific papers/articles.
+[Wave Function Collapse Algorithm reference](https://github.com/mxgmn/WaveFunctionCollapse)
+[Procedural Generation with Wave Function Collapse](https://www.gridbugs.org/wave-function-collapse/)
+
+## Design:
+#### How will your program fit together? Make a simple free-body diagram illustrating the pieces.
+![](img/idea02.png)
+
+## Timeline:
+#### Create a week-by-week set of milestones for each person in your group. Make sure you explicitly outline what each group member's duties will be.
+
+|            | MileStone 1                                                                     | MileStone 2                                                                      | MileStone 3 |
+|  ----      | ----                                                                            | ----                                                                             | ----  |
+| Akiko Zhu  | Setup develop environment                                          | Finish the tile map generator, make WFC algorithm working in 3D scene            | Polish the procedural generation        | 
+|            | Complete 3D character basic movement                               | Finish the random stars generator                                                | Fix all the bugs                        |
+|            | Implement basic data structure of wave function collapse algorithm | Create basic materials, Finish the level generator                               | Polish the materials                    |
+
+
+
 ## Milestone 1: Implementation part 1 (due 11/13)
 Begin implementing your engine! Don't worry too much about polish or parameter tuning -- this week is about getting together the bulk of your generator implemented. By the end of the week, even if your visuals are crude, the majority of your generator's functionality should be done.
 
