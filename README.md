@@ -60,15 +60,20 @@ The most important part of the implementation is the Wave Function Collapse algo
 
 
 
-## Milestone 1: Implementation part 1 (due 11/13)
-#### Begin implementing your engine! Don't worry too much about polish or parameter tuning -- this week is about getting together the bulk of your generator implemented. By the end of the week, even if your visuals are crude, the majority of your generator's functionality should be done.
+## Milestone 1: Implementation part 1 (DONE: due 11/13)
+#### 1. Set up everything for the game development
+#### 2. Implement C# script to achieve 3D character movement, including vertical and horizontal movement, and jump
+#### 3. Implement a spherical camera such that the camera will always look at the character and rotate by the cursor
 
+|Character & Camera Controller|
+|:-:|
+|<img src="img/m1_controller.gif" width=500>|
 
+#### 4. Create some basic tiles for the wave function collapse algorithm, and implement the algorithm framework
 
-#### Submission: Add a new section to your README titled: Milestone #1, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what's giving you trouble?
-- Examples of your generators output so far
-- We'll check your repository for updates. No need to create a new pull request.
+|Basic tiles|
+|:-:|
+|<img src="img/m1_tiles.png" width=500>|
 
 
 ## Milestone 2: Implementation part 2 (due 11/25)
