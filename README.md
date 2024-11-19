@@ -77,9 +77,15 @@ The most important part of the implementation is the Wave Function Collapse algo
 
 
 ## Milestone 2: Implementation part 2 (due 11/25)
-We're over halfway there! This week should be about fixing bugs and extending the core of your generator. Make sure by the end of this week _your generator works and is feature complete._ Any core engine features that don't make it in this week should be cut! Don't worry if you haven't managed to exactly hit your goals. We're more interested in seeing proof of your development effort than knowing your planned everything perfectly. 
 
-Put all your code in your forked repository.
+#### 1. Finish the tile map generator, make the WFC algorithm work in 3D scene
+
+|3D WFC algorithm|
+|:-:|
+|<img src="img/m2_wfc.png" width=500>|
+
+#### 2. Implement C# script to achieve random star generation
+#### 3. Implement basic materials, Finish the level generator
 
 Submission: Add a new section to your README titled: Milestone #3, which should include
 - written description of progress on your project goals. If you haven't hit all your goals, what did you have to cut and why? 
