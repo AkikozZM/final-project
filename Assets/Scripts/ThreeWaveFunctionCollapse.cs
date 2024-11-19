@@ -2,32 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OneWaveFunctionCollapse : MonoBehaviour
+public class ThreeWaveFunctionCollapse : MonoBehaviour
 {
     [System.Serializable]
     public class Tile
     {
         public GameObject tilePrefab;
-        //public int id;
-        public List<int> allowedNeighbors;
+        public List<int> allowedNeighbors; // IDs of tiles that can be adjacent
     }
 
     public List<Tile> tiles;
-    public int lineLength = 10; // length of the grid col = row
-    public float tileSpacing = 1f;
-    private List<HashSet<int>> possibleTiles; // the possible tile that each position will be placed
+    public int lineLength = 10;
+    public float tileSpacing = 2f; // Space between each tile
+
+    private List<HashSet<int>> possibleTiles; // Possible tiles for each position in the grid
+    private int gridWidth;  // X dimension of the grid
+    private int gridHeight; // Y dimension of the grid
+    private int gridDepth;  // Z dimension of the grid
 
     private void Start()
     {
+        gridWidth = this.lineLength;
+        gridHeight = this.lineLength;
+        gridDepth = this.lineLength;
         InitializeGrid();
         RunWFC();
-        InstantiateTiles2D();
+        InstantiateTiles3D();
     }
+
     void InitializeGrid()
     {
         possibleTiles = new List<HashSet<int>>();
-        int size = lineLength * lineLength;
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < gridWidth * gridHeight * gridDepth; i++)
         {
             HashSet<int> initialOptions = new HashSet<int>();
             for (int j = 0; j < tiles.Count; j++)
@@ -40,10 +46,9 @@ public class OneWaveFunctionCollapse : MonoBehaviour
 
     bool IsCollapsed()
     {
-        // check if each cell in the grid has one option left
         foreach (var options in possibleTiles)
         {
-            if (options.Count > 1) { return false; }
+            if (options.Count > 1) return false;
         }
         return true;
     }
@@ -68,8 +73,8 @@ public class OneWaveFunctionCollapse : MonoBehaviour
     {
         var options = possibleTiles[index];
         int chosenTile = Random.Range(0, options.Count);
-        // set the chosen tile and remove all other possibilities
         int selectedTileID = -1;
+
         foreach (int option in options)
         {
             if (chosenTile == 0)
@@ -125,15 +130,18 @@ public class OneWaveFunctionCollapse : MonoBehaviour
 
             if (tileId == -1) continue;
 
-            // Calculate neighbors in 2D (top, bottom, left, right)
-            int row = currentIndex / lineLength;
-            int col = currentIndex % lineLength;
+            // Calculate neighbors in 3D (top, bottom, left, right, front, back)
+            int x = currentIndex % gridWidth;
+            int y = (currentIndex / gridWidth) % gridHeight;
+            int z = currentIndex / (gridWidth * gridHeight);
 
             int[] neighbors = {
-                (row > 0) ? currentIndex - lineLength : -1, // Top
-                (row < lineLength - 1) ? currentIndex + lineLength : -1, // Bottom
-                (col > 0) ? currentIndex - 1 : -1, // Left
-                (col < lineLength - 1) ? currentIndex + 1 : -1 // Right
+                (y < gridHeight - 1) ? currentIndex + gridWidth : -1,             // Top
+                (y > 0) ? currentIndex - gridWidth : -1,                          // Bottom
+                (x > 0) ? currentIndex - 1 : -1,                                  // Left
+                (x < gridWidth - 1) ? currentIndex + 1 : -1,                      // Right
+                (z < gridDepth - 1) ? currentIndex + gridWidth * gridHeight : -1, // Front
+                (z > 0) ? currentIndex - gridWidth * gridHeight : -1              // Back
             };
 
             foreach (int neighbor in neighbors)
@@ -148,53 +156,33 @@ public class OneWaveFunctionCollapse : MonoBehaviour
 
     void RunWFC()
     {
-        // while each cell has multiple possible options
         while (!IsCollapsed())
         {
             int minOptionsIndex = FindCellWithFewestOptions();
             if (minOptionsIndex == -1) break;
 
-            // Collapse a random tile in this position
             CollapseTile(minOptionsIndex);
-
-            // Propagate constraints to neighboring cells
             PropagateConstraints(minOptionsIndex);
         }
     }
 
-    void InstantiateTiles1D()
+    void InstantiateTiles3D()
     {
-        // Instantiate tiles based on the collapsed grid
-        for (int i = 0; i < lineLength; i++)
+        for (int z = 0; z < gridDepth; z++)
         {
-            int tileId = GetCollapsedTile(i);
-            if (tileId != -1)
+            for (int y = 0; y < gridHeight; y++)
             {
-                GameObject tilePrefab = tiles[tileId].tilePrefab;
-                Vector3 position = transform.position + Vector3.right * i * tileSpacing;
-                Instantiate(tilePrefab, position, Quaternion.identity, transform);
-            }
-        }
-    }
-    void InstantiateTiles2D()
-    {
-        // Loop over each cell in a 10x10 grid
-        for (int row = 0; row < lineLength; row++)
-        {
-            for (int col = 0; col < lineLength; col++)
-            {
-                int index = row * lineLength + col;
-                int tileId = GetCollapsedTile(index);
-
-                if (tileId != -1)
+                for (int x = 0; x < gridWidth; x++)
                 {
-                    GameObject tilePrefab = tiles[tileId].tilePrefab;
+                    int index = z * gridWidth * gridHeight + y * gridWidth + x;
+                    int tileId = GetCollapsedTile(index);
 
-                    // Calculate the position based on row and column
-                    Vector3 position = transform.position + new Vector3(col * tileSpacing, 0, row * tileSpacing);
-
-                    // Instantiate the tile at the calculated position
-                    Instantiate(tilePrefab, position, Quaternion.identity, transform);
+                    if (tileId != -1)
+                    {
+                        GameObject tilePrefab = tiles[tileId].tilePrefab;
+                        Vector3 position = transform.position + new Vector3(x * tileSpacing, y * tileSpacing, z * tileSpacing);
+                        Instantiate(tilePrefab, position, Quaternion.identity, transform);
+                    }
                 }
             }
         }

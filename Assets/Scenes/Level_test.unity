@@ -582,6 +582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1415770444}
   - component: {fileID: 1415770443}
+  - component: {fileID: 1415770445}
   m_Layer: 0
   m_Name: WFC
   m_TagString: Untagged
@@ -596,19 +597,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1415770442}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d465fb0b7bcf234dbd4e0e3cb874134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tiles:
-  - name: A1
-    id: 0
+  - tilePrefab: {fileID: 4736382562451177745, guid: 9ec237654c0d9524fa8e3ba82c289b20, type: 3}
+    allowedNeighbors: 0000000002000000
+  - tilePrefab: {fileID: 4736382562451177745, guid: 8a0adae834d64ce4f99ecc1ea80f043b, type: 3}
+    allowedNeighbors: 0000000002000000
+  - tilePrefab: {fileID: 4736382562451177745, guid: 1b2a1f62d9950394c95a16811ed198e6, type: 3}
     allowedNeighbors: 0000000001000000
-  - name: B1
-    id: 1
-    allowedNeighbors: 000000000100000004000000
   lineLength: 10
+  tileSpacing: 2
 --- !u!4 &1415770444
 Transform:
   m_ObjectHideFlags: 0
@@ -624,6 +626,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1415770445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415770442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43094bd0b2a46d84891bc3db7c1c449f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - tilePrefab: {fileID: 4736382562451177745, guid: 9ec237654c0d9524fa8e3ba82c289b20, type: 3}
+    allowedNeighbors: 0100000002000000
+  - tilePrefab: {fileID: 4736382562451177745, guid: 8a0adae834d64ce4f99ecc1ea80f043b, type: 3}
+    allowedNeighbors: 0000000002000000
+  - tilePrefab: {fileID: 4736382562451177745, guid: 1b2a1f62d9950394c95a16811ed198e6, type: 3}
+    allowedNeighbors: 0000000001000000
+  lineLength: 10
+  tileSpacing: 2
 --- !u!1 &1932182480
 GameObject:
   m_ObjectHideFlags: 0
