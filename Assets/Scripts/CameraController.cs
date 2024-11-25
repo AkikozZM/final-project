@@ -9,6 +9,9 @@ public class CameraController : MonoBehaviour
     public float mouseSensitivity = 1f;
     public float minYAngle = -20f;
     public float maxYAngle = 80f;
+    public float zoomSpeed = 5f;
+    public float minDistance = 10f;
+    public float maxDistance = 60f;
 
     private float currentX = 0f;
     private float currentY = 0f;
@@ -34,6 +37,11 @@ public class CameraController : MonoBehaviour
             // Clamp the vertical rotation angle to avoid flipping over
             currentY = Mathf.Clamp(currentY, minYAngle, maxYAngle);
         }
+        // Zoom in/out with mouse scroll wheel
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        distance -= scroll * zoomSpeed;
+        // Clamp the zoom distance
+        distance = Mathf.Clamp(distance, minDistance, maxDistance);
     }
 
     void LateUpdate()

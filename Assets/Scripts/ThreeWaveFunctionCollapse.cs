@@ -8,7 +8,12 @@ public class ThreeWaveFunctionCollapse : MonoBehaviour
     public class Tile
     {
         public GameObject tilePrefab;
-        public List<int> allowedNeighbors; // IDs of tiles that can be adjacent
+        //public List<int> allowedNeighbors;
+        public List<int> allowedNeighborsX;
+        public List<int> allowedNeighborsY;
+        public List<int> allowedNeighborsZ;
+        public bool requiresEmptyAbove; // check if a tile needs empty space above
+        public int maxOccurrencesPerFloor = 2;
     }
 
     public List<Tile> tiles;
@@ -19,6 +24,7 @@ public class ThreeWaveFunctionCollapse : MonoBehaviour
     private int gridWidth;  // X dimension of the grid
     private int gridHeight; // Y dimension of the grid
     private int gridDepth;  // Z dimension of the grid
+    private Dictionary<int, int[]> floorTileCounts;
 
     private void Start()
     {
@@ -33,6 +39,7 @@ public class ThreeWaveFunctionCollapse : MonoBehaviour
     void InitializeGrid()
     {
         possibleTiles = new List<HashSet<int>>();
+        floorTileCounts = new Dictionary<int, int[]>();
         for (int i = 0; i < gridWidth * gridHeight * gridDepth; i++)
         {
             HashSet<int> initialOptions = new HashSet<int>();
@@ -41,6 +48,11 @@ public class ThreeWaveFunctionCollapse : MonoBehaviour
                 initialOptions.Add(j); // Use the index as the ID
             }
             possibleTiles.Add(initialOptions);
+        }
+        // Initialize floor appearance counters for each tile
+        for (int y = 0; y < gridHeight; y++)
+        {
+            floorTileCounts[y] = new int[tiles.Count];
         }
     }
 
@@ -84,17 +96,19 @@ public class ThreeWaveFunctionCollapse : MonoBehaviour
             }
             chosenTile--;
         }
+        int y = (index / gridWidth) % gridHeight;
+        floorTileCounts[y][selectedTileID]++;
         options.Clear();
         options.Add(selectedTileID);
     }
 
-    bool RestrictOptions(int index, int neighborTileId)
+    bool RestrictOptions(int index, int neighborTileId, List<int> allowedNeighbors)
     {
         var options = possibleTiles[index];
         Tile neighborTile = tiles[neighborTileId];
         bool optionsChanged = false;
 
-        HashSet<int> allowedOptions = new HashSet<int>(neighborTile.allowedNeighbors);
+        HashSet<int> allowedOptions = new HashSet<int>(allowedNeighbors);
         foreach (int option in new List<int>(options))
         {
             if (!allowedOptions.Contains(option))
@@ -135,6 +149,24 @@ public class ThreeWaveFunctionCollapse : MonoBehaviour
             int y = (currentIndex / gridWidth) % gridHeight;
             int z = currentIndex / (gridWidth * gridHeight);
 
+            // Limit certain tiles' occurrences per floor
+            if (floorTileCounts[y][tileId] >= tiles[tileId].maxOccurrencesPerFloor)
+            {
+                possibleTiles[currentIndex].Remove(tileId);
+                continue;
+            }
+
+            // Ensure specific tiles have an empty space above them
+            if (tiles[tileId].requiresEmptyAbove && y < gridHeight - 1)
+            {
+                int aboveIndex = currentIndex + gridWidth;
+                if (possibleTiles[aboveIndex].Count > 0)
+                {
+                    possibleTiles[currentIndex].Remove(tileId);
+                    continue;
+                }
+            }
+
             int[] neighbors = {
                 (y < gridHeight - 1) ? currentIndex + gridWidth : -1,             // Top
                 (y > 0) ? currentIndex - gridWidth : -1,                          // Bottom
@@ -144,11 +176,24 @@ public class ThreeWaveFunctionCollapse : MonoBehaviour
                 (z > 0) ? currentIndex - gridWidth * gridHeight : -1              // Back
             };
 
-            foreach (int neighbor in neighbors)
+            List<int>[] allowedNeighbors = {
+                tiles[tileId].allowedNeighborsY, // Top
+                tiles[tileId].allowedNeighborsY, // Bottom
+                tiles[tileId].allowedNeighborsX, // Left
+                tiles[tileId].allowedNeighborsX, // Right
+                tiles[tileId].allowedNeighborsZ, // Front
+                tiles[tileId].allowedNeighborsZ  // Back
+            };
+
+            for (int i = 0; i < neighbors.Length; i++)
             {
-                if (neighbor != -1 && RestrictOptions(neighbor, tileId))
+                int neighborIndex = neighbors[i];
+                if (neighborIndex != -1)
                 {
-                    propagationQueue.Enqueue(neighbor);
+                    if (RestrictOptions(neighborIndex, tileId, allowedNeighbors[i]))
+                    {
+                        propagationQueue.Enqueue(neighborIndex);
+                    }
                 }
             }
         }
@@ -181,7 +226,9 @@ public class ThreeWaveFunctionCollapse : MonoBehaviour
                     {
                         GameObject tilePrefab = tiles[tileId].tilePrefab;
                         Vector3 position = transform.position + new Vector3(x * tileSpacing, y * tileSpacing, z * tileSpacing);
-                        Instantiate(tilePrefab, position, Quaternion.identity, transform);
+                        // Generate a random Y-axis rotation (0, 90, 180, or 270 degrees)
+                        Quaternion rotation = Quaternion.Euler(0, Random.Range(0, 4) * 90, 0);
+                        Instantiate(tilePrefab, position, rotation, transform);
                     }
                 }
             }
