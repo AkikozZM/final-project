@@ -94,12 +94,12 @@ The most important part of the implementation is the Wave Function Collapse algo
 |:-:|
 |<img src="img/m2_demo.gif" width=500>|
 
-Submission: Add a new section to your README titled: Milestone #3, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what did you have to cut and why? 
-- Detailed output from your generator, images, video, etc.
-We'll check your repository for updates. No need to create a new pull request.
+## Milestone 3: Implementation part 3
+#### 1. Working on the shaders, UI, materials, lights, and atmosphere. Make the entire game scene more artistic and creative.
+#### 2. Make sure the entire game has no bugs at all.
+#### 3. Clean up the unnecessary codes, such as debug logs and test functions.
+#### 4. Build and deploy a web version so that users can easily access thru GitHub
 
-Come to class on the due date with a WORKING COPY of your project. We'll be spending time in class critiquing and reviewing your work so far.
 
 ## Final submission (due 12/2)
 Time to polish! Spen this last week of your project using your generator to produce beautiful output. Add textures, tune parameters, play with colors, play with camera animation. Take the feedback from class critques and use it to take your project to the next level.
