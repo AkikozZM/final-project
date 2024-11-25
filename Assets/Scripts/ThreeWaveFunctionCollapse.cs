@@ -13,11 +13,14 @@ public class ThreeWaveFunctionCollapse : MonoBehaviour
         public List<int> allowedNeighborsY;
         public List<int> allowedNeighborsZ;
         public bool requiresEmptyAbove; // check if a tile needs empty space above
+        public bool canGenerateStars = true;
         public int maxOccurrencesPerFloor = 2;
     }
-
+    public GameSettings gameSettings;
+    public GameObject starPrefab;
+    public int maxObjects;
     public List<Tile> tiles;
-    public int lineLength = 10;
+    public int lineLength = 4; // max cell per grid
     public float tileSpacing = 2f; // Space between each tile
 
     private List<HashSet<int>> possibleTiles; // Possible tiles for each position in the grid
@@ -28,12 +31,53 @@ public class ThreeWaveFunctionCollapse : MonoBehaviour
 
     private void Start()
     {
+        lineLength = gameSettings.maxCellPerGrid;
+        maxObjects = gameSettings.maxObjects;
         gridWidth = this.lineLength;
         gridHeight = this.lineLength;
         gridDepth = this.lineLength;
         InitializeGrid();
         RunWFC();
         InstantiateTiles3D();
+        GenerateRandomObjectsOnTiles();
+    }
+    public int getMaxObjects()
+    {
+        return maxObjects;
+    }
+    void GenerateRandomObjectsOnTiles()
+    {
+        List<int> availableTileIndices = new List<int>();
+        for (int x = 0; x < gridWidth; x++)
+        {
+            for (int y = 0; y < gridHeight; y++)
+            {
+                for (int z = 0; z < gridDepth; z++)
+                {
+                    int index = z * gridWidth * gridHeight + y * gridWidth + x;
+                    if (GetCollapsedTile(index) != -1 && tiles[GetCollapsedTile(index)].canGenerateStars)
+                    {
+                        availableTileIndices.Add(index);
+                    }
+                }
+            }
+        }
+        int objectsPlaced = 0;
+        while (objectsPlaced < maxObjects && availableTileIndices.Count > 0)
+        {
+            // Choose a random tile from the available tiles
+            int randomIndex = Random.Range(0, availableTileIndices.Count);
+            int tileIndex = availableTileIndices[randomIndex];
+            availableTileIndices.RemoveAt(randomIndex); // Remove the chosen tile to avoid duplicates
+
+            // Get the tile's position in the world
+            int x = tileIndex % gridWidth;
+            int y = (tileIndex / gridWidth) % gridHeight;
+            int z = tileIndex / (gridWidth * gridHeight);
+            Vector3 position = transform.position + new Vector3(x * tileSpacing, y * tileSpacing, z * tileSpacing);
+            Instantiate(starPrefab, position, Quaternion.identity, transform);
+            objectsPlaced++;
+        }
     }
 
     void InitializeGrid()
