@@ -3,7 +3,6 @@
 This is it! The culmination of your procedural graphics experience this semester. For your final project, we'd like to give you the time and space to explore a topic of your choosing. You may choose any topic you please, so long as you vet the topic and scope with an instructor or TA. We've provided some suggestions below. The scope of your project should be roughly 1.5 homework assignments). To help structure your time, we're breaking down the project into 4 milestones:
 
 ## Project planning: Design Doc (due 11/6)
-TODO: get your project idea and scope approved by Rachel, Adam or a TA.
 
 # Design Doc
 
@@ -56,7 +55,7 @@ The most important part of the implementation is the Wave Function Collapse algo
 |  ----      | ----                                                                            | ----                                                                             | ----  |
 | Akiko Zhu  | Setup develop environment                                          | Finish the tile map generator, make WFC algorithm working in 3D scene            | Polish the procedural generation        | 
 |            | Complete 3D character basic movement                               | Finish the random stars generator                                                | Fix all the bugs                        |
-|            | Implement basic data structure of wave function collapse algorithm | Create basic materials, Finish the level generator                               | Polish the materials                    |
+|            | Implement basic data structure of wave function collapse algorithm | Complete tiles model, Create basic materials, Finish the level generator                               | Polish the materials                    |
 
 
 
@@ -76,7 +75,7 @@ The most important part of the implementation is the Wave Function Collapse algo
 |<img src="img/m1_tiles.png" width=500>|
 
 
-## Milestone 2: Implementation part 2 (due 11/25)
+## Milestone 2: Implementation part 2 (DONE: 11/25)
 
 #### 1. Finish the tile map generator, make the WFC algorithm work in 3D scene
 
@@ -85,7 +84,15 @@ The most important part of the implementation is the Wave Function Collapse algo
 |<img src="img/m2_wfc.png" width=500>|
 
 #### 2. Implement C# script to achieve random star generation
-#### 3. Implement basic materials, Finish the level generator
+#### 3. Complete all the tiles model, Finish the infinite-level generation function
+
+|New tiles|
+|:-:|
+|<img src="img/m2_tiles.gif" width=500>|
+
+|Gameplay Demo|
+|:-:|
+|<img src="img/m2_demo.gif" width=500>|
 
 Submission: Add a new section to your README titled: Milestone #3, which should include
 - written description of progress on your project goals. If you haven't hit all your goals, what did you have to cut and why? 
