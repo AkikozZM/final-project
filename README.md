@@ -83,6 +83,10 @@ The most important part of the implementation is the Wave Function Collapse algo
 |:-:|
 |<img src="img/m2_wfc.png" width=500>|
 
+|A 10x10x10 Grid WFC|
+|:-:|
+|<img src="img/m2_100tiles.gif" width=500>|
+
 #### 2. Implement C# script to achieve random star generation
 #### 3. Complete all the tiles model, Finish the infinite-level generation function
 
