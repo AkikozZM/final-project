@@ -94,7 +94,7 @@ The most important part of the implementation is the Wave Function Collapse algo
 |:-:|
 |<img src="img/m2_demo.gif" width=500>|
 
-## Milestone 3: Implementation part 3
+## Milestone 3: Implementation part 3 (TODO)
 #### 1. Working on the shaders, UI, materials, lights, and atmosphere. Make the entire game scene more artistic and creative.
 #### 2. Make sure the entire game has no bugs at all.
 #### 3. Clean up the unnecessary codes, such as debug logs and test functions.
