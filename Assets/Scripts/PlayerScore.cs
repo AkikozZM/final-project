@@ -14,6 +14,7 @@ public class PlayerScore : MonoBehaviour
     {
         score += points;
         guiController.updateStarCount(score);
+        guiController.addMoreTime(30f);
         Debug.Log("Score: " + score);
         if (score == wfc.maxObjects)
         {
@@ -23,6 +24,7 @@ public class PlayerScore : MonoBehaviour
                 gameSettings.maxCellPerGrid++;
             }
             guiController.StartFadeOutAndRestart();
+            guiController.updateCurrentTime();
         }
     }
     public int getScore()

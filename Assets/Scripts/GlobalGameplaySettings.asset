@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxObjects: 1
   maxCellPerGrid: 4
+  currentTime: 60

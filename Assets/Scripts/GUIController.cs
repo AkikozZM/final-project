@@ -12,12 +12,16 @@ public class GUIController : MonoBehaviour
     public CanvasGroup canvasGroup;
     public TextMeshProUGUI starCountText;
     public TextMeshProUGUI targetCountText;
+    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI gameOverText;
     public float fadeDuration = 1f;
 
     private int currentStarCount = 0;
     private int currentTargetCount = 0;
+    private float timer;
     void Start()
     {
+        timer = gameSettings.currentTime;
         currentStarCount = 0;
         currentTargetCount = gameSettings.maxObjects;
         starCountText.text = currentStarCount.ToString();
@@ -27,6 +31,25 @@ public class GUIController : MonoBehaviour
             restartButton.onClick.AddListener(StartFadeOutAndRestart);
         }
     }
+
+    void Update()
+    {
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+        }
+        else
+        {
+            timer = 0;
+            DisplayGameOver();
+        }
+
+        // Format the timer to show minutes:seconds
+        float minutes = Mathf.FloorToInt(timer / 60);
+        float seconds = Mathf.FloorToInt(timer % 60);
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
     public void updateTargetCount(int n)
     {
         currentTargetCount = n;
@@ -53,5 +76,21 @@ public class GUIController : MonoBehaviour
             yield return null;
         }
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void updateCurrentTime()
+    {
+        gameSettings.currentTime = timer;
+    }
+
+    public void addMoreTime(float n)
+    {
+        this.timer += n;
+    }
+
+    private void DisplayGameOver()
+    {
+        gameOverText.gameObject.SetActive(true);
+        gameOverText.text = "Game Over";
     }
 }

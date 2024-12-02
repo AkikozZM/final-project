@@ -1206,6 +1206,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile_test1
       objectReference: {fileID: 0}
+    - target: {fileID: 6052604643064707068, guid: 9ec237654c0d9524fa8e3ba82c289b20, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2c8e859381d7985468d2c029dd21acf0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
