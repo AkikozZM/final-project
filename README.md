@@ -1,3 +1,12 @@
+# Gameplay Instruction
+- Download all the files in the "Build" folder.
+- Run "Dungeon.exe"
+- The game will be automatically started when you get into the scene.
+- Use "WASD" to move the character.
+- Mouse controls the camera rotation. Mouse left drag to rotate the camera, roll the mid-wheel to zoom in or zoom out.
+- Please find all the stars hidden in the "dungeon" in the limited-time
+- This is an infinite-level procedure-generated puzzle game, take your time to get through the level as much as possible.
+
 # Final Project - Feel the 3D Dungeon!
 
 This is it! The culmination of your procedural graphics experience this semester. For your final project, we'd like to give you the time and space to explore a topic of your choosing. You may choose any topic you please, so long as you vet the topic and scope with an instructor or TA. We've provided some suggestions below. The scope of your project should be roughly 1.5 homework assignments). To help structure your time, we're breaking down the project into 4 milestones:
